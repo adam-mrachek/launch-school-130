@@ -160,6 +160,18 @@ class TodoList
   def all_not_done
     select { |todo| !todo.done? }
   end
+
+  def mark_done(str)
+    find_by_title(str) && find_by_title(str).done! # right side will only execute if left side evaluates to `true` meaning the todo exists.
+  end
+
+  def mark_all_done
+    each { |todo| todo.done! }
+  end
+
+  def mark_all_undone
+    each { |todo| todo.undone! }
+  end
 end
 
 todo1 = Todo.new("Buy milk")
@@ -234,5 +246,8 @@ list.add(todo3)                 # adds todo3 to end of list, returns list
 #
 # puts results.inspect
 
-todo1.done!
-p list.all_not_done
+list.mark_all_done
+puts list
+
+list.mark_all_undone
+puts list
